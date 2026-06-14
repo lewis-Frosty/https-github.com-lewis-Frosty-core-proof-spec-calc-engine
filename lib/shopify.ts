@@ -2,8 +2,17 @@ import 'server-only';
 import type { ProductData } from './types';
 import { FALLBACK_PRODUCT } from './data';
 
-const DOMAIN = process.env.SHOPIFY_STORE_DOMAIN;
-const TOKEN = process.env.SHOPIFY_STOREFRONT_API_TOKEN;
+// Accept whichever naming convention is present. Vercel's Shopify integration
+// injects `SEA_`-/`Sealyn_`-prefixed variables, while a manual setup uses the
+// plain `SHOPIFY_*` names — read all of them so either wiring works.
+const DOMAIN =
+  process.env.SHOPIFY_STORE_DOMAIN ||
+  process.env.SEA_SHOPIFY_STORE_DOMAIN ||
+  process.env.Sealyn_SHOPIFY_STORE_DOMAIN;
+const TOKEN =
+  process.env.SHOPIFY_STOREFRONT_API_TOKEN ||
+  process.env.SEA_SHOPIFY_STOREFRONT_ACCESS_TOKEN ||
+  process.env.Sealyn_SHOPIFY_STOREFRONT_ACCESS_TOKEN;
 const VERSION = process.env.SHOPIFY_STOREFRONT_API_VERSION || '2025-01';
 export const PRODUCT_HANDLE = process.env.SHOPIFY_PRODUCT_HANDLE || 'sealyn-lining-tile';
 
